@@ -4,29 +4,25 @@ import java.util.Scanner;
 
 public class Paaohjelma {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Lukija lukija = new Lukija();
 
     public static void main(String[] args) {
 
         while (true) {
-            System.out.println("\nValitse pelataanko"
-                    + "\n (a) ihmistä vastaan "
-                    + "\n (b) tekoälyä vastaan"
-                    + "\n (c) parannettua tekoälyä vastaan"
-                    + "\nmuilla valinnoilla lopetataan");
+            vaihtoehdot();
 
-            String vastaus = scanner.nextLine();
+            String vastaus = lukija.lueSyote();
             if (vastaus.endsWith("a")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSPelaajaVsPelaaja kaksinpeli = new KPSPelaajaVsPelaaja();
+                ohjeet();
+                KPSPeli kaksinpeli = KPSPeli.luoKPSPelaajaVsPelaaja(lukija);
                 kaksinpeli.pelaa();
             } else if (vastaus.endsWith("b")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSTekoaly yksinpeli = new KPSTekoaly();
+                ohjeet();
+                KPSPeli yksinpeli = KPSPeli.luoKPSTekoaly(lukija);
                 yksinpeli.pelaa();
             } else if (vastaus.endsWith("c")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSParempiTekoaly pahaYksinpeli = new KPSParempiTekoaly();
+                ohjeet();
+                KPSPeli pahaYksinpeli = KPSPeli.luoKPSParempiTekoaly(lukija);
                 pahaYksinpeli.pelaa();
             } else {
                 break;
@@ -34,5 +30,17 @@ public class Paaohjelma {
 
         }
 
+    }
+    
+    private static void vaihtoehdot() {
+        lukija.tulosta("\nValitse pelataanko"
+                    + "\n (a) ihmistä vastaan "
+                    + "\n (b) tekoälyä vastaan"
+                    + "\n (c) parannettua tekoälyä vastaan"
+                    + "\nmuilla valinnoilla lopetataan");
+    }
+    
+    private static void ohjeet() {
+        lukija.tulosta("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
     }
 }
